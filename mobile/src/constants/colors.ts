@@ -1,11 +1,12 @@
+// Sourced from the Fitling Figma file's "Logos & Icons" palette swatches.
 export const Colors = {
-  primary: '#FF8A4C',
-  primaryPressed: '#E8672A',
-  background: '#FFF8F0',
-  card: '#FFFFFF',
-  border: '#FFD9B8',
-  text: '#3A2A1E',
-  textMuted: '#8B7355',
+  primary: '#FC7B10',
+  primaryPressed: '#FA6404',
+  backgroundGradient: ['#FFF1E4', '#FFD0A9'] as const,
+  card: '#FEFBFA',
+  border: '#FFD0A9',
+  text: '#11100E',
+  textMuted: 'rgba(17, 16, 14, 0.55)',
   danger: '#D14343',
 } as const;
 
