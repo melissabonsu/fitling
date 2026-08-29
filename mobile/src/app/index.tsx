@@ -1,4 +1,5 @@
 import { useRouter } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, StyleSheet, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -57,34 +58,32 @@ export default function Index() {
     router.replace('/log-in');
   }
 
-  if (checkingAuth) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <ActivityIndicator />
-      </SafeAreaView>
-    );
-  }
-
   return (
-    <SafeAreaView style={styles.container}>
-      {status === 'loading' ? (
-        <ActivityIndicator />
-      ) : (
-        <Text style={styles.text}>Fitling backend: {status}</Text>
-      )}
-      <Pressable onPress={handleLogOut} style={styles.logOut}>
-        <Text style={styles.logOutText}>Log out</Text>
-      </Pressable>
-    </SafeAreaView>
+    <LinearGradient colors={Colors.backgroundGradient} style={styles.flex}>
+      <SafeAreaView style={styles.container}>
+        {checkingAuth || status === 'loading' ? (
+          <ActivityIndicator />
+        ) : (
+          <Text style={styles.text}>Fitling backend: {status}</Text>
+        )}
+        {!checkingAuth && (
+          <Pressable onPress={handleLogOut} style={styles.logOut}>
+            <Text style={styles.logOutText}>Log out</Text>
+          </Pressable>
+        )}
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.background,
     gap: 16,
   },
   text: {

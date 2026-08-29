@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import { useState } from 'react';
 import {
   ActivityIndicator,
@@ -52,77 +53,75 @@ export function AuthForm({
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subtitle}>{subtitle}</Text>
+    <LinearGradient colors={Colors.backgroundGradient} style={styles.flex}>
+      <SafeAreaView style={styles.flex}>
+        <KeyboardAvoidingView
+          style={styles.flex}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+          <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.subtitle}>{subtitle}</Text>
 
-          {error && (
-            <View style={styles.errorBanner}>
-              <Text style={styles.errorText}>{error}</Text>
-            </View>
-          )}
-
-          <View style={styles.field}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              placeholder="you@example.com"
-              placeholderTextColor={Colors.textMuted}
-              autoCapitalize="none"
-              autoComplete="email"
-              keyboardType="email-address"
-              textContentType="emailAddress"
-            />
-          </View>
-
-          <View style={styles.field}>
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={styles.input}
-              value={password}
-              onChangeText={setPassword}
-              placeholder="At least 8 characters"
-              placeholderTextColor={Colors.textMuted}
-              secureTextEntry
-              autoComplete="password"
-              textContentType="password"
-            />
-          </View>
-
-          <Pressable
-            style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
-            onPress={handleSubmit}
-            disabled={submitting || !email || !password}>
-            {submitting ? (
-              <ActivityIndicator color={Colors.card} />
-            ) : (
-              <Text style={styles.buttonText}>{submitLabel}</Text>
+            {error && (
+              <View style={styles.errorBanner}>
+                <Text style={styles.errorText}>{error}</Text>
+              </View>
             )}
-          </Pressable>
 
-          <View style={styles.footer}>
-            <Text style={styles.footerPrompt}>{footerPrompt} </Text>
-            <Pressable onPress={onFooterAction}>
-              <Text style={styles.footerAction}>{footerActionLabel}</Text>
+            <View style={styles.field}>
+              <Text style={styles.label}>Email</Text>
+              <TextInput
+                style={styles.input}
+                value={email}
+                onChangeText={setEmail}
+                placeholder="you@example.com"
+                placeholderTextColor={Colors.textMuted}
+                autoCapitalize="none"
+                autoComplete="email"
+                keyboardType="email-address"
+                textContentType="emailAddress"
+              />
+            </View>
+
+            <View style={styles.field}>
+              <Text style={styles.label}>Password</Text>
+              <TextInput
+                style={styles.input}
+                value={password}
+                onChangeText={setPassword}
+                placeholder="At least 8 characters"
+                placeholderTextColor={Colors.textMuted}
+                secureTextEntry
+                autoComplete="password"
+                textContentType="password"
+              />
+            </View>
+
+            <Pressable
+              style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
+              onPress={handleSubmit}
+              disabled={submitting || !email || !password}>
+              {submitting ? (
+                <ActivityIndicator color={Colors.card} />
+              ) : (
+                <Text style={styles.buttonText}>{submitLabel}</Text>
+              )}
             </Pressable>
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+
+            <View style={styles.footer}>
+              <Text style={styles.footerPrompt}>{footerPrompt} </Text>
+              <Pressable onPress={onFooterAction}>
+                <Text style={styles.footerAction}>{footerActionLabel}</Text>
+              </Pressable>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: Colors.background,
-  },
   flex: {
     flex: 1,
   },
