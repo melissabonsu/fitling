@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     get "health", to: "health#show"
+    post "signup", to: "registrations#create"
+    post "login", to: "sessions#create"
   end
 
   # Defines the root path route ("/")

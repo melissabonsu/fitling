@@ -8,7 +8,7 @@ const BACKEND_PORT = 3000;
  * Wi-Fi network). Falls back to localhost for web/simulator edge cases.
  */
 export function getApiUrl(): string {
-  const hostUri = Constants.expoConfig?.hostUri ?? Constants.expoGoConfig?.hostUri;
+  const hostUri = Constants.expoConfig?.hostUri;
   const host = hostUri?.split(':')[0];
   return `http://${host ?? 'localhost'}:${BACKEND_PORT}`;
 }
