@@ -15,11 +15,16 @@ export class AuthError extends Error {
 }
 
 async function postCredentials(path: string, email: string, password: string): Promise<AuthResult> {
-  const response = await fetch(`${getApiUrl()}${path}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${getApiUrl()}${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
+    });
+  } catch {
+    throw new AuthError(["Can't reach the Fitling server. Make sure the backend is running."]);
+  }
 
   const data = await response.json();
 
