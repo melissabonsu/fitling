@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get "health", to: "health#show"
     post "signup", to: "registrations#create"
     post "login", to: "sessions#create"
+    get "fitling", to: "fitlings#show"
   end
 
   # Defines the root path route ("/")

@@ -40,4 +40,20 @@ class UserTest < ActiveSupport::TestCase
     user = User.new(valid_attributes.merge(password: nil))
     assert_not user.valid?
   end
+
+  test "creating a user automatically creates a default Fitling" do
+    user = User.create!(valid_attributes)
+
+    assert user.fitling.present?
+    assert_equal "Fitling", user.fitling.name
+  end
+
+  test "destroying a user destroys its Fitling" do
+    user = User.create!(valid_attributes)
+    fitling_id = user.fitling.id
+
+    user.destroy!
+
+    assert_not Fitling.exists?(fitling_id)
+  end
 end
