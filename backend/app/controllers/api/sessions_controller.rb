@@ -13,7 +13,7 @@ module Api
     private
 
     def user_json(user)
-      { id: user.id, email: user.email }
+      { id: user.id, name: user.name, email: user.email }
     end
   end
 end

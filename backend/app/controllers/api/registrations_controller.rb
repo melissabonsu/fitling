@@ -13,11 +13,11 @@ module Api
     private
 
     def user_params
-      params.permit(:email, :password)
+      params.permit(:name, :email, :password)
     end
 
     def user_json(user)
-      { id: user.id, email: user.email }
+      { id: user.id, name: user.name, email: user.email }
     end
   end
 end

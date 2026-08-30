@@ -3,7 +3,7 @@ require "test_helper"
 module Api
   class FitlingsControllerTest < ActionDispatch::IntegrationTest
     setup do
-      @user = User.create!(email: "rider@example.com", password: "password123")
+      @user = User.create!(name: "Rider", email: "rider@example.com", password: "password123")
       @token = JsonWebToken.encode(user_id: @user.id)
     end
 

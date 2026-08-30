@@ -2,11 +2,26 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   def valid_attributes
-    { email: "rider@example.com", password: "password123" }
+    { name: "Rider", email: "rider@example.com", password: "password123" }
   end
 
   test "valid with a unique email and long-enough password" do
     assert User.new(valid_attributes).valid?
+  end
+
+  test "invalid without a name" do
+    user = User.new(valid_attributes.merge(name: nil))
+    assert_not user.valid?
+  end
+
+  test "invalid with a blank name" do
+    user = User.new(valid_attributes.merge(name: "   "))
+    assert_not user.valid?
+  end
+
+  test "strips surrounding whitespace from the name" do
+    user = User.create!(valid_attributes.merge(name: "  Rider  "))
+    assert_equal "Rider", user.name
   end
 
   test "invalid without an email" do

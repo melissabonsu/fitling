@@ -5,7 +5,7 @@ import { getApiUrl } from '@/config/api';
 
 const TOKEN_KEY = 'fitling_auth_token';
 
-export type AuthUser = { id: number; email: string };
+export type AuthUser = { id: number; name: string | null; email: string };
 export type AuthResult = { token: string; user: AuthUser };
 
 export class AuthError extends Error {
@@ -14,13 +14,17 @@ export class AuthError extends Error {
   }
 }
 
-async function postCredentials(path: string, email: string, password: string): Promise<AuthResult> {
+async function postForm(path: string, fields: Record<string, string>): Promise<AuthResult> {
+  const body = Object.entries(fields)
+    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    .join('&');
+
   let response: Response;
   try {
     response = await fetch(`${getApiUrl()}${path}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
+      body,
     });
   } catch {
     throw new AuthError(["Can't reach the Fitling server. Make sure the backend is running."]);
@@ -35,12 +39,12 @@ async function postCredentials(path: string, email: string, password: string): P
   return data as AuthResult;
 }
 
-export function signUp(email: string, password: string): Promise<AuthResult> {
-  return postCredentials('/api/signup', email, password);
+export function signUp(name: string, email: string, password: string): Promise<AuthResult> {
+  return postForm('/api/signup', { name, email, password });
 }
 
 export function logIn(email: string, password: string): Promise<AuthResult> {
-  return postCredentials('/api/login', email, password);
+  return postForm('/api/login', { email, password });
 }
 
 // expo-secure-store has no web implementation (there's no OS keychain to back

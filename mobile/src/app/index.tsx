@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { LoadingScreen } from '@/components/loading-screen';
+import { BunnyNeutral } from '@/components/mascot';
 import { Colors, Radii } from '@/constants/colors';
 import { clearToken, getToken } from '@/lib/auth';
 import { Fitling, getFitling, UnauthorizedError } from '@/lib/fitling';
@@ -76,14 +78,14 @@ export default function Index() {
     router.replace('/log-in');
   }
 
+  if (state === 'checking' || state === 'loading') {
+    return <LoadingScreen />;
+  }
+
   return (
     <LinearGradient colors={Colors.backgroundGradient} style={styles.flex}>
       <SafeAreaView style={styles.flex}>
-        {state === 'checking' || state === 'loading' ? (
-          <View style={styles.centered}>
-            <ActivityIndicator />
-          </View>
-        ) : state === 'error' ? (
+        {state === 'error' ? (
           <View style={styles.centered}>
             <Text style={styles.errorText}>Couldn't load your Fitling.</Text>
             <Pressable onPress={() => setState('loading')}>
@@ -93,7 +95,7 @@ export default function Index() {
         ) : (
           fitling && (
             <ScrollView contentContainerStyle={styles.content}>
-              <Text style={styles.mascot}>🐰</Text>
+              <BunnyNeutral width={190} height={190} />
               <Text style={styles.name}>{fitling.name}</Text>
               <Text style={styles.level}>Level {fitling.level}</Text>
 
@@ -136,9 +138,6 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingBottom: 32,
     gap: 4,
-  },
-  mascot: {
-    fontSize: 96,
   },
   name: {
     fontSize: 26,
